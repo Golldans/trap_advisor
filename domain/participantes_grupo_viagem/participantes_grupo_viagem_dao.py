@@ -1,0 +1,3 @@
+from participantes_grupo_viagem_model import ParticipantesGrupoViagemModel
+
+SQL_SELECT_PARTICIPANTES_GRUPO_VIAGEM_MODEL
