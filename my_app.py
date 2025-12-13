@@ -87,6 +87,12 @@ def atualizar_usuario(id):
     usuarioDao.salvar(usuario)
     return {"mensagem": "Usuário atualizado com sucesso!"}
 
+#do a delete route
+@app.route("/usuario/deletar/<int:id>", methods=["DELETE"])
+def deletar_usuario(id):
+    usuarioDao.deletar(id)
+    return {"mensagem": "Usuário deletado com sucesso!"}
+
 
 if __name__ == '__main__':
     app.run(debug=True)

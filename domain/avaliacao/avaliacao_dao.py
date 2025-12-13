@@ -32,6 +32,9 @@ class AvaliacaoDao:
                                avaliacao,
                            ))
 
+        self.__db.connection.commit()
+        return avaliacao
+
     def listar(self):
         cursor = self.__db.connection.cursor()
         cursor.execute(SQL_SELECT_AVALIACOES)

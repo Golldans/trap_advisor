@@ -31,6 +31,8 @@ class ComentarioDao:
             cursor.execute(SQL_UPDATE_COMENTARIO,(
                 comentario
             ))
+
+        self.__db.connection.commit()
         return comentario
 
     def listar(self):

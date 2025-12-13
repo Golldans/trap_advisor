@@ -32,6 +32,9 @@ class ParticipantesGrupoViagemDao:
                 participantes_grupo_viagem
             ))
 
+        self.__db.connection.commit()
+        return participantes_grupo_viagem
+
     def listar(self):
         cursor = self.__db.connection.cursor()
         cursor.execute(SQL_SELECT_PARTICIPANTES_GRUPO_VIAGEM_MODEL)
