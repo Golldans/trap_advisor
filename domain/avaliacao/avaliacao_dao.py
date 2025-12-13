@@ -13,7 +13,7 @@ SQL_UPDATE_AVALIACAO=(
 )
 SQL_DELETE_AVALIACAO="DELETE FROM avaliacao WHERE id_avaliacao=%s"
 
-class Avaliacaoao:
+class AvaliacaoDao:
 
     def __init__(self, conn):
         self.__db = conn

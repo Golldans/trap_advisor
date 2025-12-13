@@ -14,6 +14,7 @@ SQL_UPDATE_LOCALIZACAO = (
 SQL_DELETE_LOCALIZACAO = "DELETE FROM localizacao WHERE id_localizacao=%s"
 
 class LocalizacaoDao:
+    model = LocalizacaoModel(None, None, None, None)
 
     def __init__(self, conn):
         self.__db = conn
