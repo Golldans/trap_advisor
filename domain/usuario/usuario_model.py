@@ -1,8 +1,8 @@
 class UsuarioModel:
 
     def __init__(self, nome, apelido, senha, perfil, data_nascimento,
-                email, telefone, id, data_criacao,
-                data_atualizacao, data_remocao):
+                email, telefone, id=None, data_criacao=None,
+                data_atualizacao=None, data_remocao=None):
         self.id = id
         self.nome = nome
         self.apelido = apelido

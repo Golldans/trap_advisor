@@ -1,4 +1,4 @@
-from historico_localizacoes_model import HistoricoLocalizacoesModel
+from domain.historico_localizacoes.historico_localizacoes_model import HistoricoLocalizacoesModel
 
 SQL_SELECT_HISTORICO_LOCALIZACOES = "SELECT * FROM historico_localizacoes"
 SQL_SELECT_HISTORICO_LOCALIZACAO_ID = "SELECT * FROM historico_localizacoes WHERE id_historico_localizacao=%s"

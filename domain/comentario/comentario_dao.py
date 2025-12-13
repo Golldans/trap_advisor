@@ -1,4 +1,4 @@
-from comentario_model import ComentarioModel
+from domain.comentario.comentario_model import ComentarioModel
 
 SQL_SELECT_COMENTARIO="SELECT * FROM comentario"
 SQL_SELECT_COMENTARIO_ID="SELECT * FROM comentario WHERE id_comentario=%s"

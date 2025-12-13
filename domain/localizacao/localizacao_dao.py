@@ -1,4 +1,4 @@
-from localizacao_model import LocalizacaoModel
+from domain.localizacao.localizacao_model import LocalizacaoModel
 
 SQL_SELECT_LOCALIZACOES = "SELECT * FROM localizacao"
 SQL_SELECT_LOCALIZACAO_ID = "SELECT * FROM localizacao WHERE id_localizacao=%s"
@@ -14,8 +14,6 @@ SQL_UPDATE_LOCALIZACAO = (
 SQL_DELETE_LOCALIZACAO = "DELETE FROM localizacao WHERE id_localizacao=%s"
 
 class LocalizacaoDao:
-    model = LocalizacaoModel(None, None, None, None)
-
     def __init__(self, conn):
         self.__db = conn
 

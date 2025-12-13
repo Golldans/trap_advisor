@@ -1,4 +1,5 @@
-from usuario_model import UsuarioModel
+from domain.usuario.usuario_model import UsuarioModel
+from datetime import datetime
 
 SQL_SELECT_USUARIOS="SELECT * FROM usuario"
 SQL_SELECT_USUARIO_ID="SELECT * FROM usuario WHERE id_usuario=%s"
@@ -20,18 +21,37 @@ class UsuarioDao:
 
     def salvar(self, usuario):
         cursor = self.__db.connection.cursor()
+        agora = datetime.now()
 
         if usuario.id is None:
             cursor.execute(SQL_INSERT_USUARIO,
                            (
-                               usuario
+                               usuario.nome,
+                                 usuario.apelido,
+                                    usuario.senha,
+                                        usuario.email,
+                                            usuario.telefone,
+                                                usuario.perfil,
+                                                    usuario.data_nascimento,
+                                                        agora,
+                                                            agora
                            ))
             usuario.id = cursor.lastrowid
         else:
             cursor.execute(SQL_UPDATE_USUARIO,
                            (
-                               usuario
+                                 usuario.nome,
+                                    usuario.apelido,
+                                        usuario.senha,
+                                         usuario.email,
+                                              usuario.telefone,
+                                                    usuario.perfil,
+                                                     usuario.data_nascimento,
+                                                          agora,
+                                                                usuario.id
                            ))
+        self.__db.connection.commit()
+        return usuario
 
     def listar(self):
         cursor = self.__db.connection.cursor()

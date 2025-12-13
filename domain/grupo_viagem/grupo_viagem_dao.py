@@ -1,4 +1,4 @@
-from grupo_viagem_model import GrupoViagemModel
+from domain.grupo_viagem.grupo_viagem_model import GrupoViagemModel
 
 SQL_SELECT_GRUPO_VIAGENS = "SELECT * FROM grupo_viagem"
 SQL_SELECT_GRUPO_VIAGEM_ID = "SELECT * FROM grupo_viagem WHERE id_grupo_viagem=%s"

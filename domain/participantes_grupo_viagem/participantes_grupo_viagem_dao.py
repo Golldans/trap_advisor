@@ -1,4 +1,4 @@
-from participantes_grupo_viagem_model import ParticipantesGrupoViagemModel
+from domain.participantes_grupo_viagem.participantes_grupo_viagem_model import ParticipantesGrupoViagemModel
 
 SQL_SELECT_PARTICIPANTES_GRUPO_VIAGEM_MODEL="SELECT * FROM participantes_grupo_viagem"
 SQL_SELECT_PARTICIPANTES_GRUPO_VIAGEM_MODEL_ID="SELECT * FROM participantes_grupo_viagem WHERE id_participantes_grupo_viagem=%s"

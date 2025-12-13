@@ -1,4 +1,4 @@
-from avaliacao_model import AvaliacaoModel
+from domain.avaliacao.avaliacao_model import AvaliacaoModel
 
 SQL_SELECT_AVALIACOES="SELECT * FROM avaliacao"
 SQL_SELECT_AVALIACOES_ID="SELECT * FROM avaliacao WHERE id_avaliacao=%s"

@@ -1,4 +1,4 @@
-from wishlist_model import WishListModel
+from domain.wishlist.wishlist_model import WishListModel
 
 SQL_SELECT_WISHLIST = "SELECT * FROM wishlist"
 SQL_SELECT_WISHLIST_ID = "SELECT * FROM wishlist WHERE id_wishlist=%s"
