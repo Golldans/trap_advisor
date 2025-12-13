@@ -4,12 +4,11 @@ SQL_SELECT_LOCALIZACOES = "SELECT * FROM localizacao"
 SQL_SELECT_LOCALIZACAO_ID = "SELECT * FROM localizacao WHERE id_localizacao=%s"
 SQL_INSERT_LOCALIZACAO = (
     "INSERT INTO localizacao "
-    "(pais, cidade, descricao) "
-    "VALUES (%s, %s, %s)"
+    "(nome, latitude, longitude, data_criacao, data_atualizacao) "
+    "VALUES (%s, %s, %s, %s, %s)"
 )
 SQL_UPDATE_LOCALIZACAO = (
-    "UPDATE localizacao SET pais=%s, "
-    "cidade=%s, descricao=%s "
+    "UPDATE localizacao SET nome=%s, latitude=%s, longitude=%s, data_atualizacao=%s "
     "WHERE id_localizacao=%s"
 )
 SQL_DELETE_LOCALIZACAO = "DELETE FROM localizacao WHERE id_localizacao=%s"

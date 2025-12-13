@@ -1,14 +1,17 @@
 from usuario_model import UsuarioModel
 
-SQL_SELECT_USUARIOS=""
-SQL_SELECT_USUARIO_ID=""
+SQL_SELECT_USUARIOS="SELECT * FROM usuario"
+SQL_SELECT_USUARIO_ID="SELECT * FROM usuario WHERE id_usuario=%s"
 SQL_INSERT_USUARIO=(
-    ""
+    "INSERT INTO usuario "
+    "(nome, apelido, senha, email, telefone, perfil, data_nascimento, data_criacao, data_atualizacao) "
+    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 )
 SQL_UPDATE_USUARIO=(
-    ""
+    "UPDATE usuario SET nome=%s, apelido=%s, senha=%s, email=%s, telefone=%s, perfil=%s, data_nascimento=%s, data_atualizacao=%s "
+    "WHERE id_usuario=%s"
 )
-SQL_DELETE_USUARIO=""
+SQL_DELETE_USUARIO="DELETE FROM usuario WHERE id_usuario=%s"
 
 class UsuarioDao:
 

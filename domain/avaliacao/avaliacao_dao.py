@@ -1,10 +1,17 @@
 from avaliacao_model import AvaliacaoModel
 
-SQL_SELECT_AVALIACOES=""
-SQL_SELECT_AVALIACOES_ID=""
-SQL_INSERT_AVALIACAO=""
-SQL_UPDATE_AVALIACAO=""
-SQL_DELETE_AVALIACAO=""
+SQL_SELECT_AVALIACOES="SELECT * FROM avaliacao"
+SQL_SELECT_AVALIACOES_ID="SELECT * FROM avaliacao WHERE id_avaliacao=%s"
+SQL_INSERT_AVALIACAO=(
+    "INSERT INTO avaliacao "
+    "(estrelas, descricao, data_criacao, data_atualizacao, fk_id_usuario, fk_id_localizacao) "
+    "VALUES (%s, %s, %s, %s, %s, %s)"
+)
+SQL_UPDATE_AVALIACAO=(
+    "UPDATE avaliacao SET estrelas=%s, descricao=%s, data_atualizacao=%s, fk_id_usuario=%s, fk_id_localizacao=%s "
+    "WHERE id_avaliacao=%s"
+)
+SQL_DELETE_AVALIACAO="DELETE FROM avaliacao WHERE id_avaliacao=%s"
 
 class Avaliacaoao:
 

@@ -2,9 +2,16 @@ from comentario_model import ComentarioModel
 
 SQL_SELECT_COMENTARIO="SELECT * FROM comentario"
 SQL_SELECT_COMENTARIO_ID="SELECT * FROM comentario WHERE id_comentario=%s"
-SQL_INSERT_COMENTARIO=()
-SQL_UPDATE_COMENTARIO=""
-SQL_DELETE_COMENTARIO=""
+SQL_INSERT_COMENTARIO=(
+    "INSERT INTO comentario "
+    "(conteudo, curtidas, fk_id_localizacao, fk_id_usuario, fk_id_comentario_resposta, data_criacao, data_atualizacao) "
+    "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+)
+SQL_UPDATE_COMENTARIO=(
+    "UPDATE comentario SET conteudo=%s, curtidas=%s, fk_id_localizacao=%s, fk_id_usuario=%s, fk_id_comentario_resposta=%s, data_atualizacao=%s "
+    "WHERE id_comentario=%s"
+)
+SQL_DELETE_COMENTARIO="DELETE FROM comentario WHERE id_comentario=%s"
 
 class ComentarioDao:
 

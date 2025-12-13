@@ -4,12 +4,10 @@ SQL_SELECT_GRUPO_VIAGENS = "SELECT * FROM grupo_viagem"
 SQL_SELECT_GRUPO_VIAGEM_ID = "SELECT * FROM grupo_viagem WHERE id_grupo_viagem=%s"
 SQL_INSERT_GRUPO_VIAGEM = (
     "INSERT INTO grupo_viagem "
-    "(nome_grupo, descricao_grupo, data_criacao_grupo) "
-    "VALUES (%s, %s, %s)"
+    "nome_grupo_viagem, quantidade_maxima_pessoas, fk_id_localizacao, fk_id_usuario, data_criacao, da_atualizacao"
 )
 SQL_UPDATE_GRUPO_VIAGEM = (
-    "UPDATE grupo_viagem SET nome_grupo=%s, "
-    "descricao_grupo=%s, data_criacao_grupo=%s "
+    "UPDATE grupo_viagem SET nome_grupo_viagem=%s, descricao=%s, data_criacao=%s "
     "WHERE id_grupo_viagem=%s"
 )
 SQL_DELETE_GRUPO_VIAGEM = "DELETE FROM grupo_viagem WHERE id_grupo_viagem=%s"
