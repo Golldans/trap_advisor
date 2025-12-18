@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trap Advisor</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 24px;
+            border-radius: 6px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Bem-vindo ao Trap Advisor</h1>
+
+    {% if user %}
+        <p>Olá, {{ user.nickname }}! <a href="/logout">Sair</a></p>
+    {% else %}
+        <p>
+            <a href="/login">Login</a> ou
+            <a href="/register">Registrar</a>
+        </p>
+    {% endif %}
+
+    <p>Seu guia definitivo para viagens!</p>
+
+    <h2>Locais</h2>
+    <table>
+        <tr>
+            <th>Nome do Local</th>
+            <th>Ação</th>
+        </tr>
+        {% for localizacao in localizacoes %}
+        <tr>
+            <td>{{ localizacao.nome }}</td>
+            <td>
+                <a href="/trilha/{{ localizacao.id }}">Ver Detalhes</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <span>
+        <!-- nao achou o que queria? registre uma localizacao link -->
+        <p>
+            Não achou o que queria? <a href="/adicionar_localizacao">Registre uma nova localização</a>.
+        </p>
+    </span>
+</div>
+
+</body>
+</html>

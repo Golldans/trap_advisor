@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Grupo de viagens</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 24px;
+            border-radius: 6px;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        form {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            margin-top: 16px;
+            padding: 10px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Participe do grupo de viagem</h1>
+
+    <form method="post" action="/participar_grupo_viagem">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome_usuario" required>
+
+        <input type="hidden" name="id_localizacao" value="{{ id_localizacao }}">
+
+        <button type="submit">Participar</button>
+    </form>
+
+    <h2>Pessoas já no grupo</h2>
+    <ul>
+        {% for participante in participantes %}
+            <li>{{ participante.nome }}</li>
+        {% else %}
+            <li>Nenhum participante ainda.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>

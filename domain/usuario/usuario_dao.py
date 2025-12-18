@@ -20,7 +20,7 @@ class UsuarioDao:
         self.__db = conn
 
     def salvar(self, usuario):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
         agora = datetime.now()
 
         if usuario.id is None:
@@ -50,23 +50,47 @@ class UsuarioDao:
                                                           agora,
                                                                 usuario.id
                            ))
-        self.__db.connection.commit()
+        self.__db.commit()
         return usuario
 
     def listar(self):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
         cursor.execute(SQL_SELECT_USUARIOS)
         lista_usuarios = cursor.fetchall()
         return lista_usuarios
 
     def listar_por_id(self, id):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
         cursor.execute(SQL_SELECT_USUARIO_ID, (id,))
         tupla = cursor.fetchone()
-
-        return tupla
+        return self.traduzir_para_model(tupla)
 
     def deletar(self, id):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
         cursor.execute(SQL_DELETE_USUARIO, (id,))
-        self.__db.connection.commit()
+        self.__db.commit()
+
+    def traduzir_para_model(self, tupla):
+        if tupla is None:
+            return None
+        return UsuarioModel(
+            id=tupla[0],
+            nome=tupla[1],
+            apelido=tupla[2],
+            senha=tupla[3],
+            email=tupla[4],
+            telefone=tupla[5],
+            perfil=tupla[6],
+            data_nascimento=tupla[7],
+            data_criacao=tupla[8],
+            data_atualizacao=tupla[9]
+        )
+
+    def traduzir_lista_models(self, lista_tuplas):
+        return [self.traduzir_para_model(tupla) for tupla in lista_tuplas]
+
+    def buscar_por_nome(self, nome):
+        cursor = self.__db.cursor()
+        cursor.execute("SELECT * FROM usuario WHERE nome=%s", (nome,))
+        tupla = cursor.fetchone()
+        return self.traduzir_para_model(tupla)

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Localizacao</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 24px;
+            border-radius: 6px;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #555;
+        }
+
+        h3 {
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        form {
+            margin-top: 16px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        button {
+            margin-top: 16px;
+            padding: 10px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .comentarios {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comentario {
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .comentario-conteudo {
+            font-size: 15px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <h1>Detalhes da Localização</h1>
+    <h2>{{ localizacao.nome }}</h2>
+
+    <p><strong>Latitude:</strong> {{ localizacao.latitude }}</p>
+    <p><strong>Longitude:</strong> {{ localizacao.longitude }}</p>
+    <p><strong>Avaliação Média:</strong> {{ avaliacao_media }} estrelas</p>
+    <h1>Participe do grupo de viagens!</h1>
+    <a href="/grupo_viagem/{{ localizacao.id }}">
+        <button>Entrar no Grupo de Viagem</button>
+    </a>
+
+    <h3>Comentários:</h3>
+    <ul class="comentarios">
+        {% for comentario in comentarios %}
+            <li class="comentario">
+                <div class="comentario-conteudo">
+                    {{ comentario.conteudo }}
+                </div>
+            </li>
+        {% else %}
+            <li>Nenhum comentário ainda.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Deixe sua Avaliação:</h3>
+    <form method="post" action="/avaliacao">
+        <label for="usuario">Nome de Usuário</label>
+        <input type="text" id="usuario" name="nome_usuario" required>
+
+        <label for="nota">Nota (1–5)</label>
+        <input type="number" id="nota" name="nota" min="1" max="5" required>
+
+        <label for="comentario">Comentário</label>
+        <textarea id="comentario" name="comentario" required></textarea>
+
+        <input type="hidden" name="id_localizacao" value="{{ localizacao.id }}">
+
+        <button type="submit">Enviar Avaliação</button>
+    </form>
+</div>
+
+</body>
+</html>

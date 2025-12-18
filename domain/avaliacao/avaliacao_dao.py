@@ -19,30 +19,62 @@ class AvaliacaoDao:
         self.__db = conn
 
     def salvar(self, avaliacao):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
 
         if avaliacao.id is None:
             cursor.execute(SQL_INSERT_AVALIACAO, (
-                avaliacao,
+                avaliacao.estrelas,
+                avaliacao.descricao,
+                avaliacao.data_criacao,
+                avaliacao.data_atualizacao,
+                avaliacao.id_usuario,
+                avaliacao.id_localizacao
             ))
             avaliacao.id = cursor.lastrowid
         else:
             cursor.execute(SQL_UPDATE_AVALIACAO,
                            (
-                               avaliacao,
+                               avaliacao.estrelas,
+                               avaliacao.descricao,
+                               avaliacao.data_criacao,
+                               avaliacao.data_atualizacao,
+                               avaliacao.id_usuario,
+                               avaliacao.id_localizacao
                            ))
 
-        self.__db.connection.commit()
+        self.__db.commit()
         return avaliacao
 
     def listar(self):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
         cursor.execute(SQL_SELECT_AVALIACOES)
         lista_avaliacoes = cursor.fetchall()
-        return lista_avaliacoes
+        return self.traduzir_lista_models(lista_avaliacoes)
 
     def listar_por_id(self, id):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
         cursor.execute(SQL_SELECT_AVALIACOES_ID, (id,))
         tupla = cursor.fetchone
-        return tupla
+        return self.traduzir_para_model(tupla)
+
+    def listar_por_id_localizacao(self, id_localizacao):
+        cursor = self.__db.cursor()
+        cursor.execute("SELECT * FROM avaliacao WHERE fk_id_localizacao=%s", (id_localizacao,))
+        lista_avaliacoes = cursor.fetchall()
+        return self.traduzir_lista_models(lista_avaliacoes)
+
+    def traduzir_para_model(self, tupla):
+        if tupla is None:
+            return None
+        return AvaliacaoModel(
+            id=tupla[0],
+            estrelas=tupla[1],
+            descricao=tupla[2],
+            data_criacao=tupla[3],
+            data_atualizacao=tupla[4],
+            id_usuario=tupla[5],
+            id_localizacao=tupla[6]
+        )
+
+    def traduzir_lista_models(self, lista_tuplas):
+        return [self.traduzir_para_model(tupla) for tupla in lista_tuplas]

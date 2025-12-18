@@ -20,35 +20,63 @@ class ParticipantesGrupoViagemDao:
         self.__db = conn
 
     def salvar(self, participantes_grupo_viagem):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
 
         if participantes_grupo_viagem.id is None:
             cursor.execute(SQL_INSERT_PARTICIPANTES_GRUPO_VIAGEM_MODEL,(
-                participantes_grupo_viagem
+                participantes_grupo_viagem.id_usuario,
+                participantes_grupo_viagem.id_grupo_viagem,
+                participantes_grupo_viagem.data_criacao,
+                participantes_grupo_viagem.data_atualizacao
             ))
             participantes_grupo_viagem.id = cursor.lastrowid
         else:
             cursor.execute(SQL_UPDATE_PARTICIPANTES_GRUPO_VIAGEM_MODEL,(
-                participantes_grupo_viagem
+                participantes_grupo_viagem.id_usuario,
+                participantes_grupo_viagem.id_grupo_viagem,
+                participantes_grupo_viagem.data_criacao,
+                participantes_grupo_viagem.data_atualizacao
             ))
 
-        self.__db.connection.commit()
+        self.__db.commit()
         return participantes_grupo_viagem
 
     def listar(self):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
         cursor.execute(SQL_SELECT_PARTICIPANTES_GRUPO_VIAGEM_MODEL)
         lista_participantes_grupo_viagem = cursor.fetchall()
-        return lista_participantes_grupo_viagem
+        return self.traduzir_lista_models(lista_participantes_grupo_viagem)
 
     def listar_por_id(self, id):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
         cursor.execute(SQL_SELECT_PARTICIPANTES_GRUPO_VIAGEM_MODEL_ID, (id,))
         tupla = cursor.fetchone()
+        return self.traduzir_para_model(tupla)
 
-        return tupla
+    def buscar_por_id_grupo_viagem (self, id_grupo_viagem):
+        cursor = self.__db.cursor()
+        cursor.execute("SELECT * FROM participantes_grupo_viagem WHERE fk_id_grupo_viagem=%s", (id_grupo_viagem,))
+        lista_tuplas = cursor.fetchall()
+        return self.traduzir_lista_models(lista_tuplas)
 
     def deletar(self, id):
-        cursor = self.__db.connection.cursor()
+        cursor = self.__db.cursor()
         cursor.execute(SQL_DELETE_PARTICIPANTES_GRUPO_VIAGEM_MODEL, (id,))
-        self.__db.connection.commit()
+        self.__db.commit()
+
+    def traduzir_para_model(self, tupla):
+        if tupla is None:
+            return None
+        return ParticipantesGrupoViagemModel(
+            id=tupla[0],
+            id_usuario=tupla[1],
+            id_grupo_viagem=tupla[2],
+            data_criacao=tupla[3],
+            data_atualizacao=tupla[4]
+        )
+
+    def traduzir_lista_models(self, lista_tuplas):
+        lista_models = []
+        for tupla in lista_tuplas:
+            lista_models.append(self.traduzir_para_model(tupla))
+        return lista_models
