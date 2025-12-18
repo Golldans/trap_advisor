@@ -26,18 +26,9 @@ from domain.historico_localizacoes.historico_localizacoes_model import Historico
 from flask import render_template
 app = Flask(__name__)
 
-#app.secret_key = 'trap_advisor'
-
-#app.config['MYSQL_HOST'] = 'localhost'
-#app.config['MYSQL_USER'] = 'root'
-#app.config['MYSQL_PASSWORD'] = '123456'
-#app.config['MYSQL_DB'] = 'trap_advisor'
-#app.config['MYSQL_PORT'] = 3306
-
-#refactor using pymysql
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root123'
+app.config['MYSQL_PASSWORD'] = '123456'
 app.config['MYSQL_DB'] = 'trap_advisor'
 app.config['MYSQL_PORT'] = 3306
 import pymysql
@@ -295,9 +286,20 @@ def participar_grupo_viagem():
 
     return render_template("grupo_viagem.html", grupo_viagem=grupo_viagem, participantes=lista_usuarios, id_localizacao=id_localizacao)
 
+@app.route("/deletar_comentario/<int:id>/<int:id_localizacao>", methods=["GET"])
+def deletar_comentario(id, id_localizacao):
+    comentarioDao.deletar(id)
 
+    localizacao = localizacaoDao.listar_por_id(id_localizacao)
+    comentarios = comentarioDao.listar_por_id_localizacao(id_localizacao)
 
+    avaliacoes = avaliacaoDao.listar_por_id_localizacao(id_localizacao)
+    soma_avaliacoes = sum([avaliacao.estrelas for avaliacao in avaliacoes])
+    quantidade_avaliacoes = len(avaliacoes)
+    media_avaliacoes = soma_avaliacoes / quantidade_avaliacoes if quantidade_avaliacoes > 0 else 0
+    media_avaliacoes = round(media_avaliacoes, 2)
 
+    return render_template("localizacao.html", localizacao=localizacao, comentarios=comentarios, avaliacao_media = media_avaliacoes)
 
 if __name__ == '__main__':
     app.run(debug=True)

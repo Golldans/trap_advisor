@@ -91,6 +91,9 @@
         .comentario-conteudo {
             font-size: 15px;
             line-height: 1.4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
@@ -116,7 +119,10 @@
         {% for comentario in comentarios %}
             <li class="comentario">
                 <div class="comentario-conteudo">
-                    {{ comentario.conteudo }}
+                    <p>{{ comentario.conteudo }}<p/>
+                    <button onclick="window.location.href='/deletar_comentario/{{ comentario.id }}/{{ localizacao.id }}'">
+                        X
+                    </button>
                 </div>
             </li>
         {% else %}
