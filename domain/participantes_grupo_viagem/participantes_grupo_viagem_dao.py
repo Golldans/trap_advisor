@@ -64,6 +64,17 @@ class ParticipantesGrupoViagemDao:
         cursor.execute(SQL_DELETE_PARTICIPANTES_GRUPO_VIAGEM_MODEL, (id,))
         self.__db.commit()
 
+    def deletar_por_id_grupo_e_usuario(self, id_grupo_viagem, id_usuario):
+        cursor = self.__db.cursor()
+        cursor.execute("DELETE FROM participantes_grupo_viagem WHERE fk_id_grupo_viagem=%s AND fk_id_usuario=%s", (id_grupo_viagem, id_usuario))
+        self.__db.commit()
+
+    def buscar_por_id_usuario_e_grupo(self, id_usuario, id_grupo):
+        cursor = self.__db.cursor()
+        cursor.execute("SELECT * FROM participantes_grupo_viagem WHERE fk_id_usuario=%s AND fk_id_grupo_viagem=%s", (id_usuario, id_grupo))
+        tupla = cursor.fetchone()
+        return self.traduzir_para_model(tupla)
+
     def traduzir_para_model(self, tupla):
         if tupla is None:
             return None

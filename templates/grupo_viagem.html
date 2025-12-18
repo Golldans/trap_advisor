@@ -52,8 +52,7 @@
         }
 
         button {
-            margin-top: 16px;
-            padding: 10px 16px;
+            padding: 2px 4px;
             font-size: 14px;
             border: none;
             border-radius: 4px;
@@ -86,7 +85,14 @@
     <h2>Pessoas já no grupo</h2>
     <ul>
         {% for participante in participantes %}
-            <li>{{ participante.nome }}</li>
+            <li>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <p>{{ participante.nome }}</p>
+                    <button onclick="window.location.href='/grupo_viagem/sair/{{ id_localizacao }}/{{ participante.id }}'">
+                        X
+                    </button>
+                </div>
+            </li>
         {% else %}
             <li>Nenhum participante ainda.</li>
         {% endfor %}

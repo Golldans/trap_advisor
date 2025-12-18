@@ -237,9 +237,23 @@ def grupo_viagem_page(id):
         usuario = usuarioDao.listar_por_id(participante.id_usuario)
         lista_usuarios.append(usuario)
 
-    print(lista_usuarios)
-
     return render_template("grupo_viagem.html", participantes=lista_usuarios, id_localizacao=id)
+
+@app.route("/grupo_viagem/sair/<int:id>/<int:id_usuario>", methods=["GET"])
+def sair_grupo_viagem(id, id_usuario):
+    grupo_viagem = grupoViagemDao.buscar_por_id_localizacao(id)
+
+    participantesGrupoViagemDao.deletar_por_id_grupo_e_usuario(grupo_viagem.id, id_usuario)
+
+    participantes = participantesGrupoViagemDao.buscar_por_id_grupo_viagem(id)
+
+    lista_usuarios = []
+
+    for participante in participantes:
+        usuario = usuarioDao.listar_por_id(participante.id_usuario)
+        lista_usuarios.append(usuario)
+
+    return render_template("grupo_viagem.html", participantes=lista_usuarios, id_localizacao=id, id_grupo=id)
 
 @app.route("/participar_grupo_viagem", methods=["POST"])
 def participar_grupo_viagem():
@@ -247,15 +261,15 @@ def participar_grupo_viagem():
     id_localizacao = request.form["id_localizacao"]
 
     usuario_entidade = usuarioDao.buscar_por_nome(nome_usuario)
+
     if usuario_entidade is None:
         return render_template("localizacao.html", localizacao=localizacaoDao.listar_por_id(id_localizacao),
                                error="Usuário não encontrado.")
-
     grupo_viagem = grupoViagemDao.buscar_por_id_localizacao(id_localizacao)
 
     if grupo_viagem is None:
         grupo_viagem = GrupoViagemModel(
-            nome_grupo_viagem="Grupo de " + str(localizacaoDao.listar_por_id(id_localizacao).nome),
+            nome_grupo_viagem="Grupo de viagem generico",
             quantidade_maxima_pessoas=10,
             id_localizacao=id_localizacao,
             id=None,
@@ -264,6 +278,19 @@ def participar_grupo_viagem():
             data_remocao=None,
         )
         grupo_viagem = grupoViagemDao.salvar(grupo_viagem)
+
+    usuario_ja_registrado = participantesGrupoViagemDao.buscar_por_id_usuario_e_grupo(usuario_entidade.id, grupo_viagem.id)
+
+    if usuario_ja_registrado is not None:
+        participantes = participantesGrupoViagemDao.buscar_por_id_grupo_viagem(grupo_viagem.id)
+
+        lista_usuarios = []
+
+        for participante in participantes:
+            usuario = usuarioDao.listar_por_id(participante.id_usuario)
+            lista_usuarios.append(usuario)
+
+        return render_template("grupo_viagem.html", grupo_viagem=grupo_viagem, participantes=lista_usuarios, id_localizacao=id_localizacao, error="Usuário já está participando do grupo de viagem.")
 
     participante = ParticipantesGrupoViagemModel(
         id_usuario=usuario_entidade.id,
